@@ -1,0 +1,54 @@
+name: release
+
+# Triggered by pushing a SemVer tag without a leading "v" (e.g. 1.0.0, 1.2.3-rc.1).
+# Publishes the package to npm with provenance.
+#
+# Required repo secret: NPM_TOKEN — an npm Automation token with publish access.
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-*"
+
+permissions:
+  contents: read
+  id-token: write # for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node (for npm publish)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Verify package.json version matches the pushed tag
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$PKG_VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::package.json version ($PKG_VERSION) does not match tag ($GITHUB_REF_NAME)"
+            exit 1
+          fi
+
+      - name: Run tests
+        run: bun run test
+
+      - name: Build
+        run: bun run build
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
