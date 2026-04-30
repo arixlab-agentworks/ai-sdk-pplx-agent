@@ -33,12 +33,12 @@ pnpm add ai ai-sdk-pplx-agent
 ## Usage
 
 ```ts
-import { generateText } from "ai"
-import { createPerplexityAgent } from "ai-sdk-pplx-agent"
+import { generateText } from "ai";
+import { createPerplexityAgent } from "ai-sdk-pplx-agent";
 
 const perplexity = createPerplexityAgent({
   // apiKey: process.env.PERPLEXITY_API_KEY  // auto-loaded if omitted
-})
+});
 
 const { text } = await generateText({
   model: perplexity("google/gemini-3-flash-preview"),
@@ -58,7 +58,7 @@ const { text } = await generateText({
       languagePreference: "ko",
     },
   },
-})
+});
 ```
 
 The provider follows the standard AI SDK shape: `perplexity(modelId)` is a shortcut for
@@ -68,8 +68,8 @@ A pre-built `perplexityAgent` instance is also exported for the common case wher
 the env-var-driven defaults:
 
 ```ts
-import { perplexityAgent } from "ai-sdk-pplx-agent"
-const model = perplexityAgent("anthropic/claude-sonnet-4-6")
+import { perplexityAgent } from "ai-sdk-pplx-agent";
+const model = perplexityAgent("anthropic/claude-sonnet-4-6");
 ```
 
 ### Provider settings
@@ -88,13 +88,13 @@ const model = perplexityAgent("anthropic/claude-sonnet-4-6")
 
 Pass under the `"perplexity-agent"` key in `providerOptions`:
 
-| field                | type       | maps to                                         |
-| -------------------- | ---------- | ----------------------------------------------- |
-| `webSearch`          | `boolean`  | appends `{ type: "web_search" }` to `tools`     |
-| `languagePreference` | `string`   | `language_preference`                           |
-| `preset`             | `string`   | `preset` (e.g. `fast-search`, `deep-research`)  |
-| `models`             | `string[]` | `models` fallback chain (max 5)                 |
-| `maxSteps`           | `number`   | `max_steps` (1–10) for the research loop        |
+| field                | type       | maps to                                        |
+| -------------------- | ---------- | ---------------------------------------------- |
+| `webSearch`          | `boolean`  | appends `{ type: "web_search" }` to `tools`    |
+| `languagePreference` | `string`   | `language_preference`                          |
+| `preset`             | `string`   | `preset` (e.g. `fast-search`, `deep-research`) |
+| `models`             | `string[]` | `models` fallback chain (max 5)                |
+| `maxSteps`           | `number`   | `max_steps` (1–10) for the research loop       |
 
 The standard `maxOutputTokens` from `generateText` is forwarded as `max_output_tokens`. Pass either
 `model` (when constructing the provider) or `preset` / `models` via `providerOptions` — the API
@@ -106,9 +106,9 @@ The provider accepts both AI SDK function tools and provider-namespaced tools fo
 endpoint's built-ins:
 
 ```ts
-import { generateText, tool } from "ai"
-import { perplexityAgent } from "ai-sdk-pplx-agent"
-import { z } from "zod"
+import { generateText, tool } from "ai";
+import { perplexityAgent } from "ai-sdk-pplx-agent";
+import { z } from "zod";
 
 await generateText({
   model: perplexityAgent("anthropic/claude-sonnet-4-6"),
@@ -131,7 +131,7 @@ await generateText({
       args: { max_urls: 5 },
     },
   },
-})
+});
 ```
 
 Provider tool IDs follow `perplexity-agent.<tool>`; currently `web_search` and `fetch_url` are
@@ -144,14 +144,14 @@ URL annotations (as `source` parts), and stream-level errors are surfaced as sta
 `LanguageModelV3StreamPart`s.
 
 ```ts
-import { streamText } from "ai"
-import { perplexityAgent } from "ai-sdk-pplx-agent"
+import { streamText } from "ai";
+import { perplexityAgent } from "ai-sdk-pplx-agent";
 
 const { textStream } = streamText({
   model: perplexityAgent("openai/gpt-5.5"),
   prompt: "Tell me a story",
-})
-for await (const chunk of textStream) process.stdout.write(chunk)
+});
+for await (const chunk of textStream) process.stdout.write(chunk);
 ```
 
 ### Multi-turn conversations
@@ -164,16 +164,14 @@ for await (const chunk of textStream) process.stdout.write(chunk)
 Perplexity Agent currently routes to the following third-party model IDs (snapshot —
 [official list](https://docs.perplexity.ai/docs/agent-api/models)):
 
-- **OpenAI** — `openai/gpt-5.5`, `openai/gpt-5.4`, `openai/gpt-5.4-mini`, `openai/gpt-5.4-nano`,
-  `openai/gpt-5.2`, `openai/gpt-5.1`, `openai/gpt-5-mini`
-- **Anthropic** — `anthropic/claude-opus-4-7`, `anthropic/claude-opus-4-6`,
-  `anthropic/claude-opus-4-5`, `anthropic/claude-sonnet-4-6`, `anthropic/claude-sonnet-4-5`,
-  `anthropic/claude-haiku-4-5`
-- **Google** — `google/gemini-3.1-pro-preview`, `google/gemini-3-flash-preview`
-- **xAI** — `xai/grok-4.20-reasoning`, `xai/grok-4-1-fast-non-reasoning`
-- **NVIDIA** — `nvidia/nemotron-3-super-120b-a12b`
-- **Perplexity** — `perplexity/sonar` (Sonar models also work, but for Sonar-only flows you may
-  prefer `@ai-sdk/perplexity` directly)
+| Provider       | Models                                                                                                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **OpenAI**     | `openai/gpt-5.5`, `openai/gpt-5.4`, `openai/gpt-5.4-mini`, `openai/gpt-5.4-nano`, `openai/gpt-5.2`, `openai/gpt-5.1`, `openai/gpt-5-mini`                                         |
+| **Anthropic**  | `anthropic/claude-opus-4-7`, `anthropic/claude-opus-4-6`, `anthropic/claude-opus-4-5`, `anthropic/claude-sonnet-4-6`, `anthropic/claude-sonnet-4-5`, `anthropic/claude-haiku-4-5` |
+| **Google**     | `google/gemini-3.1-pro-preview`, `google/gemini-3-flash-preview`                                                                                                                  |
+| **xAI**        | `xai/grok-4.20-reasoning`, `xai/grok-4-1-fast-non-reasoning`                                                                                                                      |
+| **NVIDIA**     | `nvidia/nemotron-3-super-120b-a12b`                                                                                                                                               |
+| **Perplexity** | `perplexity/sonar` (Sonar models also work, but for Sonar-only flows you may prefer `@ai-sdk/perplexity` directly)                                                                |
 
 The list shifts; fetch `GET /v1/models` (with your `PERPLEXITY_API_KEY`) to see what's currently
 live for your account.
