@@ -12,7 +12,7 @@ import {
 
 import { PerplexityAgentLanguageModel } from "./language-model"
 
-const VERSION = "0.1.0"
+const VERSION = "0.1.1"
 
 export interface PerplexityAgentProvider extends ProviderV3 {
   (modelId: string): LanguageModelV3

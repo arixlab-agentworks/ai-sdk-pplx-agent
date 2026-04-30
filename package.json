@@ -1,6 +1,6 @@
 {
   "name": "ai-sdk-pplx-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vercel AI SDK provider that routes through Perplexity's /v1/agent endpoint, giving access to Anthropic, OpenAI, Google, xAI, NVIDIA, and Sonar models with one Perplexity API key.",
   "license": "MIT",
   "author": "PleahMaCaka",
@@ -26,21 +26,17 @@
   "files": [
     "dist"
   ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
-    }
+    "provenance": true
   },
   "scripts": {
     "build": "tsdown",
