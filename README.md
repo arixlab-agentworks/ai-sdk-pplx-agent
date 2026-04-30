@@ -215,7 +215,7 @@ $env:PERPLEXITY_API_KEY = "pplx-xxx"; bun run test
 set PERPLEXITY_API_KEY=pplx-xxx && bun run test
 ```
 
-Override the model via `PERPLEXITY_LIVE_MODEL` (default `openai/gpt-5-mini`).
+Override the model via `PERPLEXITY_LIVE_MODEL` (default `google/gemini-3-flash-preview`).
 
 Coverage:
 

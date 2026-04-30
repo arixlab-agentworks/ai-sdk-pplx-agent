@@ -4,13 +4,13 @@
   "description": "Vercel AI SDK provider that routes through Perplexity's /v1/agent endpoint, giving access to Anthropic, OpenAI, Google, xAI, NVIDIA, and Sonar models with one Perplexity API key.",
   "license": "MIT",
   "author": "PleahMaCaka",
-  "homepage": "https://github.com/PleahMaCaka/ai-sdk-pplx-agent#readme",
+  "homepage": "https://github.com/arixlab-agentworks/ai-sdk-pplx-agent#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PleahMaCaka/ai-sdk-pplx-agent.git"
+    "url": "git+https://github.com/arixlab-agentworks/ai-sdk-pplx-agent.git"
   },
   "bugs": {
-    "url": "https://github.com/PleahMaCaka/ai-sdk-pplx-agent/issues"
+    "url": "https://github.com/arixlab-agentworks/ai-sdk-pplx-agent/issues"
   },
   "keywords": [
     "ai",
