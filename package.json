@@ -1,0 +1,64 @@
+{
+  "name": "ai-sdk-pplx-agent",
+  "version": "0.1.0",
+  "description": "Vercel AI SDK provider that routes through Perplexity's /v1/agent endpoint, giving access to Anthropic, OpenAI, Google, xAI, NVIDIA, and Sonar models with one Perplexity API key.",
+  "license": "MIT",
+  "author": "PleahMaCaka",
+  "homepage": "https://github.com/PleahMaCaka/ai-sdk-pplx-agent#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PleahMaCaka/ai-sdk-pplx-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PleahMaCaka/ai-sdk-pplx-agent/issues"
+  },
+  "keywords": [
+    "ai",
+    "ai-sdk",
+    "vercel-ai-sdk",
+    "perplexity",
+    "perplexity-agent",
+    "llm",
+    "language-model",
+    "provider"
+  ],
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "^3.0.9",
+    "@ai-sdk/provider-utils": "^4.0.24",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsdown": "^0.18.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
